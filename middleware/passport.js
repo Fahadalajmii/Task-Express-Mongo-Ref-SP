@@ -34,8 +34,11 @@ exports.jwtStrategy = new JWTStrategy(
     }
     try {
       const user = await User.findById(jwtPayload._id);
-      if (user) return done(null, user);
-      else {
+      if (user) {
+        console.log("🚀 ~ file: passport.js ~ line 38 ~ user", user);
+
+        return done(null, user);
+      } else {
         done(null, false);
       }
     } catch (error) {

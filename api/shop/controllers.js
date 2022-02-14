@@ -1,6 +1,21 @@
 const Product = require("../../models/Product");
 const Shop = require("../../models/Shop");
 
+exports.fetchShop = async (shopId, next) => {
+  try {
+    const shop = await Shop.findById(shopId);
+
+    if (shop) return shop;
+    else {
+      const error = new Error("Shop ID was not found!");
+      error.status = 404;
+      next(error);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.getShop = async (req, res) => {
   try {
     const shops = await Shop.find().populate("products");
